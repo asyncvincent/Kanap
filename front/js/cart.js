@@ -1,27 +1,19 @@
 const cart = localStorage.getItem('cart');
 const cartDetails = JSON.parse(cart);
 
-if (cart === null) {
-    window.location.href = './index.html';
-}
 
+// calcul total of quantity of products in cart 
+let totalQuantity = 0;
 
-// display cart details
-async function getCartDetails() {
-    let cartQuantity = 0;
-    cartDetails.forEach(product => {
-        cartQuantity += product.quantity;
-    });
-    document.getElementById('totalQuantity').innerHTML = cartQuantity;
-
-    let cartPrice = 0;
-    cartDetails.forEach(product => {
-        cartPrice += product.price * product.quantity;
-    });
+cartDetails.forEach(product => {
+    let cartPrice = '';
+    cartPrice += product.price * product.quantity;
     document.getElementById('totalPrice').innerHTML = cartPrice;
-    const cartDetailsList = document.getElementById('cart__items');
-    cartDetailsList.innerHTML = cartDetails.map(product => {
-        return `
+});
+
+const cartDetailsList = document.getElementById('cart__items');
+cartDetailsList.innerHTML = cartDetails.map(product => {
+    return `
             <article class="cart__item" data-id="${product.id}" data-color="${product.color}">
                 <div class="cart__item__img">
                     <img src="${product.image}" alt="${product.altImg}">
@@ -43,25 +35,44 @@ async function getCartDetails() {
                     </div>
                 </div>
             </article>`;
-    }).join('');
-}
+}).join('');
 
-getCartDetails();
 
-// use itemQuantity to update cart details and localStorage when user changes quantity of a product in cart
-const itemQuantity = document.querySelectorAll('.itemQuantity');
-itemQuantity.forEach(input => {
-    input.addEventListener('change', () => {
-        const productId = input.parentElement.parentElement.parentElement.parentElement.dataset.id;
-        const productColor = input.parentElement.parentElement.parentElement.parentElement.dataset.color;
-        const productQuantity = input.value;
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        cart.forEach(product => {
-            if (product.id === productId && product.color === productColor) {
-                product.quantity = productQuantity;
-            }
-        });
-        localStorage.setItem('cart', JSON.stringify(cart));
-        getCartDetails();
+const cartItems = document.querySelectorAll('.cart__item');
+cartItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('deleteItem')) {
+            const id = e.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
+            const color = e.target.parentElement.parentElement.parentElement.parentElement.dataset.color;
+            cartDetails.forEach((product, index) => {
+                if (product.id === id && product.color === color) {
+                    cartDetails.splice(index, 1);
+                }
+            });
+            localStorage.setItem('cart', JSON.stringify(cartDetails));
+            window.location.reload();
+        }
     });
 });
+
+const itemQuantity = document.querySelectorAll('.itemQuantity');
+itemQuantity.forEach(item => {
+    item.addEventListener('keyup', (e) => {
+        if (e.keyCode === 13) {
+            const id = e.target.parentElement.parentElement.parentElement.parentElement.dataset.id;
+            const color = e.target.parentElement.parentElement.parentElement.parentElement.dataset.color;
+            cartDetails.forEach((product, index) => {
+                if (product.id === id && product.color === color) {
+                    cartDetails[index].quantity = e.target.value;
+                }
+            });
+            localStorage.setItem('cart', JSON.stringify(cartDetails));
+            window.location.reload();
+        }
+    });
+});
+console.log(cartDetails);
+// Redirect to index.html if cart is empty
+if (cartDetails.length === 0) {
+    window.location.href = './index.html';
+}
