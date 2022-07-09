@@ -1,4 +1,4 @@
-// Get product details
+// Get product details from API 
 const productId = new URLSearchParams(window.location.search).get('id');
 const product = `http://localhost:3000/api/products/${productId}`;
 
@@ -40,9 +40,7 @@ async function getProductDetails() {
 
 getProductDetails();
 
-
 const addToCartBtn = document.getElementById('addToCart');
-
 addToCartBtn.addEventListener('click', async () => {
     await fetch(product)
         .then(response => response.json())
@@ -77,13 +75,17 @@ addToCartBtn.addEventListener('click', async () => {
                 quantity: parseInt(productQuantity)
             }
 
-            // Add product to cart in localStorage
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            console.log(cart);
+            // Add product to cart in localStorage and regroup products by id and color
+            const cartDetails = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartProduct = cartDetails.find(product => product.id === data._id && product.color === productColors.join(''));
+            if (cartProduct) {
+                cartProduct.quantity += parseInt(productQuantity);
+            } else {
+                cartDetails.push(product);
+            }
+            localStorage.setItem('cart', JSON.stringify(cartDetails));
 
-            // Go to cart page
+            // Redirect to cart page
             window.location.href = './cart.html';
         })
         .catch(err => console.log(err)); // Catch error if any
