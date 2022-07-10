@@ -5,6 +5,8 @@ const cartDetails = JSON.parse(cart);
 // calcul total of quantity of products in cart 
 let totalQuantity = 0;
 
+console.log(cartDetails);
+
 cartDetails.forEach(product => {
     let cartPrice = '';
     cartPrice += product.price * product.quantity;
@@ -71,7 +73,7 @@ itemQuantity.forEach(item => {
         }
     });
 });
-console.log(cartDetails);
+
 // Redirect to index.html if cart is empty
 if (cartDetails.length === 0) {
     window.location.href = './index.html';
