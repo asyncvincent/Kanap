@@ -6,6 +6,10 @@ async function getProductDetails() {
     await fetch(product)
         .then(response => response.json())
         .then(data => {
+
+            // Title of the page
+            document.title = data.name;
+
             // Product image 
             const productImg = document.querySelector('.item__img');
             const img = document.createElement('img');
@@ -56,7 +60,7 @@ addToCartBtn.addEventListener('click', async () => {
             // Verify if user as selected a quantity
             let productQuantity = document.getElementById('quantity').value;
             if (productQuantity < 1) {
-                alert('Veuillez entrer une quantité supérieure à 1');
+                alert('Veuillez entrer une quantité supérieure à 0');
                 return false;
             }
 
@@ -87,6 +91,7 @@ addToCartBtn.addEventListener('click', async () => {
 
             // Redirect to cart page
             window.location.href = './cart.html';
+
         })
         .catch(err => console.log(err)); // Catch error if any
 });
