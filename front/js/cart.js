@@ -58,41 +58,6 @@ for (let i = 0; i < cartItems.length; i++) {
 
             cartContainer.insertAdjacentHTML('beforeend', cartDetails); // Insert cart details in DOM
 
-            const deleteItem = document.querySelectorAll('.deleteItem'); // Get delete item buttons
-            // Loop through delete item buttons
-            for (let i = 0; i < deleteItem.length; i++) {
-                // Add event listener to delete item button
-                deleteItem[i].addEventListener('click', () => {
-                    // Get product id
-                    const productId = deleteItem[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
-                    // Get product color
-                    const productColor = deleteItem[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-                    // Remove product from cart
-                    removeProduct(productId, productColor);
-                });
-            }
-
-            const itemQuantity = document.querySelectorAll('.itemQuantity'); // Get item quantity inputs
-            // Loop through item quantity inputs
-            for (let i = 0; i < itemQuantity.length; i++) {
-                // Add event listener to item quantity input
-                itemQuantity[i].addEventListener('keyup', (e) => {
-                    if (e.keyCode === 13) { // Check if enter key is pressed
-                        // Get product id
-                        const productId = itemQuantity[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
-                        // Get product color
-                        const productColor = itemQuantity[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-                        // Get product quantity
-                        const productQuantity = itemQuantity[i].value;
-                        // Check if quantity is superior to 0 and inferior to 100
-                        if (productQuantity > 0 && productQuantity < 100) {
-                            // Update product quantity
-                            updateQuantity(productId, productColor, productQuantity);
-                        }
-                    }
-                });
-            }
-
             // Total quantity of products in cart
             let totalQuantityValue = 0; // Create variable to store total quantity value
             for (let i = 0; i < cartItemsQuantity.length; i++) { // Loop through cart items quantities
@@ -134,6 +99,20 @@ async function removeProduct(productId, productColor) {
     window.location.reload(); // Reload page
 }
 
+const deleteItem = document.querySelectorAll('.deleteItem'); // Get delete item buttons
+// Loop through delete item buttons
+for (let i = 0; i < deleteItem.length; i++) {
+    // Add event listener to delete item button
+    deleteItem[i].addEventListener('click', () => {
+        // Get product id
+        const productId = deleteItem[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+        // Get product color
+        const productColor = deleteItem[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+        // Remove product from cart
+        removeProduct(productId, productColor);
+    });
+}
+
 /*
  * - Update product quantity
  * @param {string} productId - Product id
@@ -151,6 +130,27 @@ async function updateQuantity(productId, productColor, productQuantity) {
     }
     localStorage.setItem('cart', JSON.stringify(cartItems)); // Save cart in localStorage
     window.location.reload(); // Reload page
+}
+
+const itemQuantity = document.querySelectorAll('.itemQuantity'); // Get item quantity inputs
+// Loop through item quantity inputs
+for (let i = 0; i < itemQuantity.length; i++) {
+    // Add event listener to item quantity input
+    itemQuantity[i].addEventListener('keyup', (e) => {
+        if (e.keyCode === 13) { // Check if enter key is pressed
+            // Get product id
+            const productId = itemQuantity[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+            // Get product color
+            const productColor = itemQuantity[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+            // Get product quantity
+            const productQuantity = itemQuantity[i].value;
+            // Check if quantity is superior to 0 and inferior to 100
+            if (productQuantity > 0 && productQuantity < 100) {
+                // Update product quantity
+                updateQuantity(productId, productColor, productQuantity);
+            }
+        }
+    });
 }
 
 function alert(type, message) {
