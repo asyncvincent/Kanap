@@ -1,7 +1,6 @@
 // Get product id from url
 function getId() {
-    var url = window.location.href; // Get url
-    var id = new URL(url).searchParams.get("id"); // Get product id from url
+    var id = new URLSearchParams(window.location.search).get('id'); // Get product id from url
     return id;
 }
 
