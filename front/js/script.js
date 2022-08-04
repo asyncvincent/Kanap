@@ -13,7 +13,7 @@ async function getProducts() {
                             <h3 class="productName">${product.name}</h3>
                             <p class="productDescription">${product.description}</p>
                         </article>
-                    </a>`
+                    </a>`;
             }).join(''); // Join the array to a string
             document.getElementById('items').innerHTML = products; // Display the products in the table
         }).catch(err => console.error(err)); // Handle errors
