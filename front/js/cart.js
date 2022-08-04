@@ -109,9 +109,10 @@ for (let i = 0; i < cartItems.length; i++) {
                         document.getElementById('totalPrice').innerHTML = totalPriceValue; // Update total price in cart
                     });
             }
+
         }).catch(err => {
             console.log(err); // Log error
-            alert('Une erreur est survenue'); // Display error message
+            alert('error', 'Une erreur est survenue'); // Display error message
         });
 }
 
@@ -198,34 +199,34 @@ function isValidForm(firstname, lastname, adress, city, email) {
 
     // Check if form is valid
     if (firstname.length < 2 || firstname.length > 50) {
-        alert('error', 'Le prénom doit contenir entre 2 et 50 caractères'); // Display error message
+        alert('error', 'Le prénom doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(firstname)) {
-        alert('error', 'Le prénom doit contenir que des lettres'); // Display error message
+        alert('error', 'Le prénom doit contenir que des lettres.'); // Display error message
         return false;
     } else if (lastname.length < 2 || lastname.length > 50) {
-        alert('error', 'Le nom doit contenir entre 2 et 50 caractères'); // Display error message
+        alert('error', 'Le nom doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(lastname)) {
-        alert('error', 'Le nom doit contenir que des lettres'); // Display error message
+        alert('error', 'Le nom doit contenir que des lettres.'); // Display error message
         return false;
     } else if (adress.length < 2 || adress.length > 50) {
-        alert('error', 'L\'adresse doit contenir entre 2 et 50 caractères'); // Display error message
+        alert('error', 'L\'adresse doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!adressRegExp.test(adress)) {
-        alert('error', 'L\'adresse doit contenir que des lettres, des chiffres, des tirets et des espaces'); // Display error message
+        alert('error', 'L\'adresse doit contenir que des lettres, des chiffres, des tirets et des espaces.'); // Display error message
         return false;
     } else if (city.length < 2 || city.length > 50) {
-        alert('error', 'La ville doit contenir entre 2 et 50 caractères'); // Display error message
+        alert('error', 'La ville doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(city)) {
-        alert('error', 'La ville doit contenir que des lettres'); // Display error message
+        alert('error', 'La ville doit contenir que des lettres.'); // Display error message
         return false;
     } else if (email.length < 2 || email.length > 50) {
-        alert('error', 'L\'email doit contenir entre 2 et 50 caractères'); // Display error message
+        alert('error', 'L\'email doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!emailRegExp.test(email)) {
-        alert('error', 'L\'email doit être valide'); // Display error message
+        alert('error', 'L\'email doit être valide.'); // Display error message
         return false;
     }
     return true;
