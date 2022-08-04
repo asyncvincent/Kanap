@@ -149,8 +149,8 @@ addToCartBtn.addEventListener('click', async () => {
                 } else {
                     cartItems.push(product); // Add product to cart
                 }
-                alert('success', `Le produit <b>${data.name}</b> a été ajouté au panier.`);
                 localStorage.setItem('cart', JSON.stringify(cartItems)); // Update cart in local storage
+                alert('success', `Le produit <b>${data.name}</b> a été ajouté au panier.`);
             } else { // If cart is empty
                 localStorage.setItem('cart', JSON.stringify([product])); // Add product to cart
                 alert('success', `Le produit <b>${data.name}</b> a été ajouté au panier.`);
