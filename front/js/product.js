@@ -150,10 +150,10 @@ addToCartBtn.addEventListener('click', async () => {
                     cartItems.push(product); // Add product to cart
                 }
                 localStorage.setItem('cart', JSON.stringify(cartItems)); // Update cart in local storage
-                alert('success', `Le produit <b>${data.name}</b> a été ajouté au panier.`);
+                alert('success', `Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#008000;"><b>panier</b></a>.`);
             } else { // If cart is empty
                 localStorage.setItem('cart', JSON.stringify([product])); // Add product to cart
-                alert('success', `Le produit <b>${data.name}</b> a été ajouté au panier.`);
+                alert('success', `Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#008000;"><b>panier</b></a>.`);
             }
 
         }).catch(err => console.log(err)); // Catch error if any
