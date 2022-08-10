@@ -63,6 +63,7 @@ for (let i = 0; i < cartItems.length; i++) {
             for (let i = 0; i < deleteItem.length; i++) {
                 // Add event listener to delete item button
                 deleteItem[i].addEventListener('click', () => {
+                    alert('Voulez vous vraiment supprimer ce produit ?', 'Cette action est irréversible.'); // Alert user
                     // Get product id
                     const productId = deleteItem[i].parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
                     // Get product color
@@ -85,9 +86,12 @@ for (let i = 0; i < cartItems.length; i++) {
                         // Get product quantity
                         const productQuantity = itemQuantity[i].value;
                         // Check if quantity is superior to 0 and inferior to 100
-                        if (productQuantity > 0 && productQuantity < 100) {
+                        if (productQuantity > 0 && productQuantity < 100 && isNaN(productQuantity) === false && productQuantity.indexOf('.') === -1) {
                             // Update product quantity
                             updateQuantity(productId, productColor, productQuantity);
+                        } else {
+                            // Display error message
+                            alert('error', 'La quantité doit être supérieure à 0 et inférieure à 100 et doit contenir uniquement des chiffres.');
                         }
                     }
                 });
@@ -239,11 +243,11 @@ orderBtn.addEventListener('click', async (e) => {
 
     let firstname = document.getElementById('firstName').value; // Get firstname
     let lastname = document.getElementById('lastName').value; // Get lastname
-    let adress = document.getElementById('address').value; // Get adress 
+    let address = document.getElementById('address').value; // Get address 
     let city = document.getElementById('city').value; // Get city
     let email = document.getElementById('email').value; // Get email
 
-    if (validateForm(firstname, lastname, adress, city, email)) {
+    if (validateForm(firstname, lastname, address, city, email)) {
 
         let productIdArray = []; // Create array to store product ids
 
@@ -257,7 +261,7 @@ orderBtn.addEventListener('click', async (e) => {
             contact: {
                 firstName: firstname,
                 lastName: lastname,
-                address: adress,
+                address: address,
                 city: city,
                 email: email
             },
