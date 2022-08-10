@@ -124,6 +124,12 @@ addToCartBtn.addEventListener('click', async () => {
                 return false;
             }
 
+            // Check if user selected quantity with only numbers
+            if (isNaN(productQuantity) || productQuantity.includes('.')) {
+                alert('error', 'Veuillez choisir une <b>quantité</b> valide.');
+                return false;
+            }
+
             const selectedColor = productcolors.options[productcolors.selectedIndex].value; // Get selected color
             const productColors = data.colors.filter(color => color === selectedColor); // Get product colors
 
