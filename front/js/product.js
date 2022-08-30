@@ -7,49 +7,19 @@ const product = baseUrl + productId; // Get product details from API
  *  @param {string} type - type of the alert
  *  @param {string} message - message to be displayed
  */
-function alert(type, message) {
-    const alertMessageContainer = document.querySelector('body'); // Get body element
+function alert(message) {
+    let itemContainer = document.getElementsByClassName('item__content__settings'); // Get item container element
+    let el = document.createElement('div'); // Create div element
 
-    // Error alert type
-    error = `<div style="width: fit-content; 
-                        z-index: 998;
-                        font-family: arial, sans-serif;
-                        padding: 12px 16px;
-                        border-radius: 8px;
-                        background-color: #FFBABA;
-                        border: 1px solid #FF6E6E;
-                        text-align: center;
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        color: #D8000C;" role="alert">${message}</div>`;
+    el.id = 'alert'; // Set id to alert
+    el.style.textAlign = 'center'; // Set text align to center
+    el.style.marginTop = '10px'; // Set margin top to 10px
+    el.innerHTML = message; // Set innerHTML to div element
+    itemContainer[0].appendChild(el); // Append div element to item container
 
-    // Success alert type
-    success = `<div style="width: fit-content;
-                        z-index: 999;
-                        font-family: arial, sans-serif;
-                        padding: 12px 16px;
-                        border-radius: 8px;
-                        background-color: #BFFFBA;
-                        border: 1px solid #00FF00;
-                        text-align: center;
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        color: #008000;" role="alert">${message}</div>`;
-
-    if (type === 'error') {
-        alertMessageContainer.insertAdjacentHTML('beforeend', error);
-    } else if (type === 'success') {
-        alertMessageContainer.insertAdjacentHTML('beforeend', success);
+    if (document.querySelectorAll('#alert').length > 1) { // If alert exists
+        itemContainer[0].removeChild(document.querySelector('#alert')); // Remove alert
     }
-
-    let alert = document.querySelectorAll('div[role="alert"]'); // Get all alerts
-
-    // Remove alert after 3 seconds
-    setTimeout(() => {
-        alert.forEach(el => el.remove());
-    }, 3000);
 }
 
 // Get product details from API
@@ -108,25 +78,25 @@ addToCartBtn.addEventListener('click', async () => {
 
             // Check if user selected color
             if (productcolors.options[0].selected) {
-                alert('error', 'Veuillez sélectionner une <b>couleur</b>.');
+                alert('Veuillez sélectionner une <b>couleur</b>.');
                 return false;
             }
 
             // Check if user selected quantity
             if (productQuantity < 1) {
-                alert('error', 'Veuillez choisir une <b>quantité</b> supérieure à <b>0</b>.');
+                alert('Veuillez choisir une <b>quantité</b> supérieure à <b>0</b>.');
                 return false;
             }
 
             // Check if user selected quantity is greater than 100
             if (productQuantity > 100) {
-                alert('error', 'Veuillez choisir une <b>quantité</b> inférieure à <b>100</b>.');
+                alert('Veuillez choisir une <b>quantité</b> inférieure à <b>100</b>.');
                 return false;
             }
 
             // Check if user selected quantity with only numbers
             if (isNaN(productQuantity) || productQuantity.includes('.')) {
-                alert('error', 'Veuillez choisir une <b>quantité</b> valide.');
+                alert('Veuillez choisir une <b>quantité</b> valide.');
                 return false;
             }
 
@@ -156,10 +126,10 @@ addToCartBtn.addEventListener('click', async () => {
                     cartItems.push(product); // Add product to cart
                 }
                 localStorage.setItem('cart', JSON.stringify(cartItems)); // Update cart in local storage
-                alert('success', `Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#008000;"><b>panier</b></a>.`);
+                alert(`Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#fff;"><b>panier</b></a>.`);
             } else { // If cart is empty
                 localStorage.setItem('cart', JSON.stringify([product])); // Add product to cart
-                alert('success', `Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#008000;"><b>panier</b></a>.`);
+                alert(`Le produit <b>${data.name}</b> a été ajouté au <a href="cart.html" style="color:#fff;"><b>panier</b></a>.`);
             }
 
         }).catch(err => console.log(err)); // Catch error if any
