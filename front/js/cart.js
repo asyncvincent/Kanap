@@ -56,7 +56,7 @@ for (let i = 0; i < cartItems.length; i++) {
                         </div>
                     </article>`;
 
-            cartContainer.insertAdjacentHTML('beforeend', cartDetails); // Insert cart details in DOM
+            cartContainer.innerHTML += cartDetails; // Insert cart details in DOM
 
             const deleteItem = document.querySelectorAll('.deleteItem'); // Get delete item buttons
             // Loop through delete item buttons
@@ -157,33 +157,20 @@ async function updateQuantity(productId, productColor, productQuantity) {
     window.location.reload(); // Reload page
 }
 
-function alert(type, message) {
-    const alertMessageContainer = document.querySelector('body'); // Get body
+function alert(message) {
+    let itemContainer = document.getElementsByClassName('cart__order__form'); // Get item container element
+    let el = document.createElement('div'); // Create div element
 
-    // Error alert type
-    error = `<div style="width: fit-content; 
-            z-index: 998;
-            font-family: arial, sans-serif;
-            padding: 12px 16px;
-            border-radius: 8px;
-            background-color: #FFBABA;
-            border: 1px solid #FF6E6E;
-            text-align: center;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            color: #D8000C;" role="alert">${message}</div>`;
+    el.id = 'alert'; // Set id to alert
+    el.style.textAlign = 'center'; // Set text align to center
+    el.style.marginTop = '10px'; // Set margin top to 10px
+    el.innerHTML = message; // Set innerHTML to div element
+    itemContainer[0].appendChild(el); // Append div element to item container
 
-    alertMessageContainer.insertAdjacentHTML('afterend', error); // Insert error alert in DOM
-
-    let alert = document.querySelectorAll('div[role="alert"]'); // Get all alerts
-
-    // Remove alert after 3 seconds
-    setTimeout(() => {
-        alert.forEach(el => el.remove());
-    }, 3000);
+    if (document.querySelectorAll('#alert').length > 1) { // If alert exists
+        itemContainer[0].removeChild(document.querySelector('#alert')); // Remove alert
+    }
 }
-
 /*
  * - Check if form is valid
  * @param {string} form - Form firstname
@@ -201,34 +188,34 @@ function validateForm(firstname, lastname, adress, city, email) {
 
     // Check if form is valid
     if (firstname.length < 2 || firstname.length > 50) {
-        alert('error', 'Le prénom doit contenir entre 2 et 50 caractères.'); // Display error message
+        alert('Le prénom doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(firstname)) {
-        alert('error', 'Le prénom doit contenir que des lettres.'); // Display error message
+        alert('Le prénom doit contenir que des lettres.'); // Display error message
         return false;
     } else if (lastname.length < 2 || lastname.length > 50) {
-        alert('error', 'Le nom doit contenir entre 2 et 50 caractères.'); // Display error message
+        alert('Le nom doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(lastname)) {
-        alert('error', 'Le nom doit contenir que des lettres.'); // Display error message
+        alert('Le nom doit contenir que des lettres.'); // Display error message
         return false;
     } else if (adress.length < 2 || adress.length > 50) {
-        alert('error', 'L\'adresse doit contenir entre 2 et 50 caractères.'); // Display error message
+        alert('L\'adresse doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!adressRegExp.test(adress)) {
-        alert('error', 'L\'adresse doit contenir que des lettres, des chiffres, des tirets et des espaces.'); // Display error message
+        alert('L\'adresse doit contenir que des lettres, des chiffres, des tirets et des espaces.'); // Display error message
         return false;
     } else if (city.length < 2 || city.length > 50) {
-        alert('error', 'La ville doit contenir entre 2 et 50 caractères.'); // Display error message
+        alert('La ville doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!nameRegExp.test(city)) {
-        alert('error', 'La ville doit contenir que des lettres.'); // Display error message
+        alert('La ville doit contenir que des lettres.'); // Display error message
         return false;
     } else if (email.length < 2 || email.length > 50) {
-        alert('error', 'L\'email doit contenir entre 2 et 50 caractères.'); // Display error message
+        alert('L\'email doit contenir entre 2 et 50 caractères.'); // Display error message
         return false;
     } else if (!emailRegExp.test(email)) {
-        alert('error', 'L\'email doit être valide.'); // Display error message
+        alert('L\'email doit être valide.'); // Display error message
         return false;
     }
     return true;
