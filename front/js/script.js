@@ -5,7 +5,7 @@ async function getProducts() {
     await fetch(baseUrl)
         .then(response => response.json()) // Convert the response to JSON
         .then(data => { // Return data
-            const products = data.map(product => { // Map the data to a new array
+            const products = data.map(product => { // Map the data to products
                 return `
                     <a href="product.html?id=${product._id}">
                         <article>
@@ -15,7 +15,8 @@ async function getProducts() {
                         </article>
                     </a>`;
             }).join(''); // Join the array to a string
-            document.getElementById('items').innerHTML = products; // Display the products in the table
+            const productsContainer = document.getElementById('items'); // Get products container element
+            productsContainer.innerHTML = products; // Set innerHTML to products container
         }).catch(err => console.error(err)); // Handle errors
 }
 
